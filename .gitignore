@@ -1,0 +1,6 @@
+.env
+__pycache__
+tests
+db
+data
+frontend_prompt.txt
