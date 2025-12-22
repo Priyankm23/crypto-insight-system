@@ -22,20 +22,32 @@ def combine_uploaded_data(uploaded_data):
 
 
     for crypto in uploaded_data:
-        df = pd.DataFrame(crypto.data)
-        df.columns = [col.lower() for col in df.columns]
-        
+        # support both dict-like (from process_uploaded_files) and object-like inputs
+        if isinstance(crypto, dict):
+            rows = crypto.get('data')
+            symbol = crypto.get('symbol')
+        else:
+            rows = getattr(crypto, 'data', None)
+            symbol = getattr(crypto, 'symbol', None)
+
+        if not rows or not symbol:
+            # skip malformed entries
+            continue
+
+        df = pd.DataFrame(rows)
+        df.columns = [str(col).strip().lower() for col in df.columns]
+
         if 'date' not in df.columns:
             date_col = next((c for c in df.columns if 'date' in c.lower() or 'time' in c.lower()), None)
             if date_col:
-                df = df.rename(columns={date_col: "date"})
+                df = df.rename(columns={date_col: 'date'})
             else:
-                raise ValueError(f"DataFrame for {crypto.symbol} must contain a 'date' or date-like column.")
+                raise ValueError(f"DataFrame for {symbol} must contain a 'date' or date-like column.")
 
         price_col = identify_price_column(df)
 
-        df = df.rename(columns={price_col: crypto.symbol, "date": "date"})
-        df = df[["date", crypto.symbol]]
+        df = df.rename(columns={price_col: symbol, 'date': 'date'})
+        df = df[['date', symbol]]
         df["date"] = pd.to_datetime(df["date"], errors='coerce')
         df = df.dropna(subset=['date'])
         all_dfs.append(df)

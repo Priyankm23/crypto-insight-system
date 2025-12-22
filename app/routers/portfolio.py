@@ -6,7 +6,7 @@ from app.services.risk_checker import run_risk_check
 from app.services.auth import get_current_user
 from app.models.user import UserInDB
 from app.services.file_processing import process_uploaded_files, save_uploaded_files
-from app.services.database import add_metric, add_portfolio_data, update_user_uploaded_file_paths, get_user
+from app.services.database import add_metric, add_portfolio_data, update_user_uploaded_file_paths, add_investment_strategy_data
 import base64
 from fastapi.responses import JSONResponse
 
@@ -24,7 +24,6 @@ async def portfolio_analysis(rule: str, files: List[UploadFile] | None = File(No
         file_paths_to_process = saved_paths
     else:
         # No new files, use previously uploaded files
-        # We can directly use current_user.uploaded_file_paths as it's already a UserInDB object
         if current_user.uploaded_file_paths:
             file_paths_to_process = current_user.uploaded_file_paths
         else:
@@ -51,7 +50,16 @@ async def portfolio_analysis(rule: str, files: List[UploadFile] | None = File(No
         comparison_df, insights, weights, plot_path = run_and_plot_strategy(rule, processed_data, user_id)
         for w in weights:
             add_metric(f"{rule}_weight_{w}", weights[w], user_id)
-        
+
+        # Store analysis results in the database
+        analysis_result = {
+            "rule": rule,
+            "insights": insights,
+            "weights": weights,
+            # We don't store plot_path directly, but the insights/weights are key results
+        }
+        add_investment_strategy_data(user_id, analysis_result) # Re-using this table for analysis results
+
         with open(plot_path, "rb") as image_file:
             encoded_string = base64.b64encode(image_file.read()).decode("utf-8")
 
@@ -86,6 +94,10 @@ async def investment_strategy(files: List[UploadFile] | None = File(None), curre
         add_metric("investment_strategy_return", result["portfolio_return"], user_id)
         for w in result['weights']:
             add_metric(f"investment_strategy_weight_{w}", result['weights'][w], user_id)
+        
+        # Store investment strategy results in the database
+        add_investment_strategy_data(user_id, result)
+
         return result
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))

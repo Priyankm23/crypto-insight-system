@@ -24,19 +24,42 @@ SMTP_SERVER = os.getenv("SMTP_SERVER")
 SMTP_PORT = os.getenv("SMTP_PORT")
 
 def fetch_data(uploaded_data=None):
-    data = {}
+    # uploaded_data may be a list of dicts (from process_uploaded_files)
+    # or objects with .data and .symbol attributes. Handle both.
+    if not uploaded_data:
+        return pd.DataFrame()
+
+    series_list = {}
+
     for crypto in uploaded_data:
-        df = pd.DataFrame(crypto.data)
-        df.columns = [col.strip().lower() for col in df.columns]
+        # support both dict-like and object-like inputs
+        if isinstance(crypto, dict):
+            rows = crypto.get('data')
+            symbol = crypto.get('symbol')
+        else:
+            rows = getattr(crypto, 'data', None)
+            symbol = getattr(crypto, 'symbol', None)
+
+        if not rows or not symbol:
+            continue
+
+        df = pd.DataFrame(rows)
+        # normalize column names to lower-case and stripped
+        df.columns = [str(col).strip().lower() for col in df.columns]
+
         if 'close' in df.columns and 'date' in df.columns:
             df['date'] = pd.to_datetime(df['date'], errors='coerce')
             df = df.dropna(subset=['date', 'close'])
-            df.set_index("date", inplace=True)
-            data[crypto.symbol] = pd.to_numeric(df['close'], errors='coerce')
-    if not data:
+            if df.empty:
+                continue
+            df.set_index('date', inplace=True)
+            series_list[symbol] = pd.to_numeric(df['close'], errors='coerce')
+
+    if not series_list:
         return pd.DataFrame()
-    prices = pd.concat(data, axis=1)
-    prices = prices.dropna(how="any")
+
+    prices = pd.concat(series_list, axis=1)
+    prices = prices.dropna(how='any')
     return prices
 
 def compute_metrics(prices):
