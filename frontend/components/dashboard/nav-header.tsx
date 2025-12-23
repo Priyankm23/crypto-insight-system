@@ -32,7 +32,7 @@ export function NavHeader() {
             </div>
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold">CryptoInsight</h1>
-              <p className="text-xs text-muted-foreground">Investment Platform</p>
+              <p className="text-xs text-muted-foreground">Analysis and Strategic Investment Platform</p>
             </div>
           </div>
 

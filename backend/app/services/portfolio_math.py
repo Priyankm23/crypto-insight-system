@@ -3,6 +3,10 @@ import pandas as pd
 import sqlite3
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import matplotlib.pyplot as plt
+import os
+
+# Get the base directory (backend folder)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def cap_weights(weights, cap=0.5):
     capped = {s: min(w, cap) for s, w in weights.items()}
@@ -119,7 +123,12 @@ def run_and_plot_strategy(selected_rule="Equal", processed_data=None, user_id=No
     plt.title("Portfolio Analysis (Last 15 days)")
     plt.xlabel("Days")
     plt.ylabel("Returns (%)")
-    plot_path = f"C:\\Users\\priya\\web dev\\crypto_investment_manager_backend\\data\\portfolio_analysis_{user_id}.png"
+    
+    # Use dynamic path based on current directory structure
+    data_dir = os.path.join(BASE_DIR, "data")
+    os.makedirs(data_dir, exist_ok=True)  # Ensure the data directory exists
+    plot_path = os.path.join(data_dir, f"portfolio_analysis_{user_id}.png")
+    
     plt.savefig(plot_path)
     plt.close()
 

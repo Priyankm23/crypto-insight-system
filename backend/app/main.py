@@ -1,6 +1,6 @@
 from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
 from app.routers import authentication, portfolio, prediction, metrics
-from starlette.middleware.cors import CORSMiddleware # Import CORSMiddleware
 
 app = FastAPI()
 

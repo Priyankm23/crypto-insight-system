@@ -31,11 +31,7 @@ export default function HomePage() {
   const router = useRouter()
   const { user, isLoading } = useAuth()
 
-  useEffect(() => {
-    if (!isLoading && user) {
-      router.push("/dashboard")
-    }
-  }, [user, isLoading, router])
+  // Removed auto-redirect to dashboard - let users see landing page even when logged in
 
   if (isLoading) {
     return (
@@ -60,15 +56,26 @@ export default function HomePage() {
               </span>
             </div>
             <div className="flex items-center gap-3">
-              <Link href="/login">
-                <Button variant="ghost">Sign In</Button>
-              </Link>
-              <Link href="/signup">
-                <Button className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70">
-                  Get Started
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
+              {user ? (
+                <Link href="/dashboard">
+                  <Button className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70">
+                    Dashboard
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </Link>
+              ) : (
+                <>
+                  <Link href="/login">
+                    <Button variant="ghost">Sign In</Button>
+                  </Link>
+                  <Link href="/signup">
+                    <Button className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70">
+                      Get Started
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -278,8 +285,8 @@ export default function HomePage() {
                 <h3 className="text-3xl font-bold mb-4">Comprehensive Portfolio Analytics</h3>
                 <p className="text-lg text-muted-foreground mb-6">
                   Upload your transaction history in CSV format, and our system automatically processes your trades, 
-                  calculates your current holdings, and generates detailed analytics. We track cost basis, unrealized 
-                  gains/losses, and provide visual breakdowns of your asset allocation.
+                  calculates your current holdings, and generates detailed analytics. Compare your portfolio performance 
+                  against market benchmarks and investment strategies to optimize your returns.
                 </p>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-3">
@@ -287,8 +294,8 @@ export default function HomePage() {
                       <ArrowRight className="w-4 h-4 text-primary" />
                     </div>
                     <div>
-                      <strong className="text-foreground">Automatic Transaction Processing:</strong>
-                      <span className="text-muted-foreground"> Parse and categorize all your buy, sell, and transfer transactions</span>
+                      <strong className="text-foreground">Performance Comparison:</strong>
+                      <span className="text-muted-foreground"> Compare your portfolio returns against market benchmarks like BTC/USDT and optimized strategies</span>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
@@ -296,8 +303,8 @@ export default function HomePage() {
                       <ArrowRight className="w-4 h-4 text-primary" />
                     </div>
                     <div>
-                      <strong className="text-foreground">Real-Time Valuation:</strong>
-                      <span className="text-muted-foreground"> Current market prices applied to calculate portfolio value</span>
+                      <strong className="text-foreground">Statistical Analysis:</strong>
+                      <span className="text-muted-foreground"> Track average, maximum, and minimum returns to understand performance range and volatility</span>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
@@ -305,112 +312,103 @@ export default function HomePage() {
                       <ArrowRight className="w-4 h-4 text-primary" />
                     </div>
                     <div>
-                      <strong className="text-foreground">Performance Tracking:</strong>
-                      <span className="text-muted-foreground"> Monitor your gains/losses across different time periods</span>
+                      <strong className="text-foreground">Strategy Evaluation:</strong>
+                      <span className="text-muted-foreground"> See how inverse volatility and other advanced strategies perform with your assets</span>
                     </div>
                   </li>
                 </ul>
               </div>
-              <Card className="border-2 border-primary/20 shadow-2xl">
-                <CardContent className="p-8">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between p-4 rounded-lg bg-gradient-to-r from-blue-500/10 to-cyan-500/10">
-                      <div className="flex items-center gap-3">
-                        <DollarSign className="w-8 h-8 text-blue-500" />
-                        <div>
-                          <div className="text-sm text-muted-foreground">Total Value</div>
-                          <div className="text-2xl font-bold">$125,847</div>
-                        </div>
-                      </div>
-                      <Badge className="bg-green-500/20 text-green-600 border-green-500/30">
-                        <TrendingUp className="w-3 h-3 mr-1" />
-                        +12.4%
-                      </Badge>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="p-4 rounded-lg bg-muted">
-                        <div className="text-xs text-muted-foreground mb-1">24h Change</div>
-                        <div className="text-lg font-semibold text-green-600">+$3,247</div>
-                      </div>
-                      <div className="p-4 rounded-lg bg-muted">
-                        <div className="text-xs text-muted-foreground mb-1">Total Gain</div>
-                        <div className="text-lg font-semibold">+$28,912</div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="border-2 border-primary/20 shadow-2xl rounded-lg overflow-hidden">
+                <img 
+                  src="/performance-comparison.png" 
+                  alt="Performance Comparison showing portfolio returns, average, maximum and minimum values compared against market benchmarks"
+                  className="w-full h-auto"
+                />
+              </div>
             </div>
 
             {/* Detail 2 */}
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <Card className="border-2 border-primary/20 shadow-2xl md:order-1 order-2">
-                <CardContent className="p-8">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-pink-500/10">
+            <div className="space-y-8">
+              <div className="grid md:grid-cols-2 gap-8 items-start">
+                <div>
+                  <Badge className="mb-4 bg-purple-500/10 text-purple-600 border-purple-500/20">
+                    <Brain className="w-3 h-3 mr-1" />
+                    AI Technology
+                  </Badge>
+                  <h3 className="text-3xl font-bold mb-4">Machine Learning Price Predictions</h3>
+                  <p className="text-lg text-muted-foreground mb-6">
+                    Our advanced ARIMA (AutoRegressive Integrated Moving Average) model analyzes historical price patterns 
+                    to forecast future cryptocurrency prices. The system automatically selects the optimal model configuration 
+                    and provides comprehensive accuracy metrics including R² Score, RMSE, MAE, and MAPE to validate predictions.
+                  </p>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3">
+                      <div className="p-1 rounded bg-primary/20 mt-1">
+                        <ArrowRight className="w-4 h-4 text-primary" />
+                      </div>
                       <div>
-                        <div className="text-sm text-muted-foreground">Next 7 Days</div>
-                        <div className="text-2xl font-bold">BTC Prediction</div>
+                        <strong className="text-foreground">High Accuracy Model:</strong>
+                        <span className="text-muted-foreground"> R² Score of 0.9911 indicates the model explains 99% of price variations with excellent predictive performance</span>
                       </div>
-                      <Brain className="w-10 h-10 text-purple-500" />
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="p-4 rounded-lg bg-muted">
-                        <div className="text-xs text-muted-foreground mb-1">Predicted Price</div>
-                        <div className="text-lg font-semibold">$48,230</div>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="p-1 rounded bg-primary/20 mt-1">
+                        <ArrowRight className="w-4 h-4 text-primary" />
                       </div>
-                      <div className="p-4 rounded-lg bg-muted">
-                        <div className="text-xs text-muted-foreground mb-1">Confidence</div>
-                        <div className="text-lg font-semibold text-green-600">78%</div>
+                      <div>
+                        <strong className="text-foreground">Confidence Intervals:</strong>
+                        <span className="text-muted-foreground"> 95% probability bounds showing expected price range with upper and lower limits for risk assessment</span>
                       </div>
-                    </div>
-                    <Badge className="w-full justify-center py-2 bg-amber-500/20 text-amber-600 border-amber-500/30">
-                      <Zap className="w-3 h-3 mr-1" />
-                      Model: LSTM Neural Network
-                    </Badge>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="p-1 rounded bg-primary/20 mt-1">
+                        <ArrowRight className="w-4 h-4 text-primary" />
+                      </div>
+                      <div>
+                        <strong className="text-foreground">Validated Predictions:</strong>
+                        <span className="text-muted-foreground"> Model trained on 2344+ data points and validated on separate test set with low error rates (MAPE 1.84%)</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div className="border-2 border-primary/20 shadow-2xl rounded-lg overflow-hidden">
+                  <img 
+                    src="/model-accuracy-metrics.png" 
+                    alt="Model Accuracy Metrics showing R² Score of 0.9911, RMSE, MAE, and MAPE with ARIMA model configuration"
+                    className="w-full h-auto"
+                  />
+                </div>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="border-2 border-primary/20 shadow-2xl rounded-lg overflow-hidden">
+                  <img 
+                    src="/price-prediction-chart.png" 
+                    alt="Price Prediction chart showing forecasted value with 95% confidence interval and historical price trends"
+                    className="w-full h-auto"
+                  />
+                </div>
+                <div className="space-y-4">
+                  <div className="border-2 border-primary/20 shadow-2xl rounded-lg overflow-hidden">
+                    <img 
+                      src="/prediction-summary.png" 
+                      alt="Prediction Summary displaying predicted value, lower bound, and upper bound with confidence interval explanation"
+                      className="w-full h-auto"
+                    />
                   </div>
-                </CardContent>
-              </Card>
-              <div className="md:order-2 order-1">
-                <Badge className="mb-4 bg-purple-500/10 text-purple-600 border-purple-500/20">
-                  <Brain className="w-3 h-3 mr-1" />
-                  AI Technology
-                </Badge>
-                <h3 className="text-3xl font-bold mb-4">Machine Learning Price Predictions</h3>
-                <p className="text-lg text-muted-foreground mb-6">
-                  Our advanced LSTM (Long Short-Term Memory) neural networks analyze historical price patterns, volume trends, 
-                  and technical indicators to forecast future price movements. The AI model is trained on years of market data 
-                  and continuously learns from new patterns.
-                </p>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-3">
-                    <div className="p-1 rounded bg-primary/20 mt-1">
-                      <ArrowRight className="w-4 h-4 text-primary" />
-                    </div>
-                    <div>
-                      <strong className="text-foreground">Multi-Factor Analysis:</strong>
-                      <span className="text-muted-foreground"> Considers price, volume, volatility, and momentum indicators</span>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="p-1 rounded bg-primary/20 mt-1">
-                      <ArrowRight className="w-4 h-4 text-primary" />
-                    </div>
-                    <div>
-                      <strong className="text-foreground">Confidence Scoring:</strong>
-                      <span className="text-muted-foreground"> Every prediction includes a confidence level based on model certainty</span>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="p-1 rounded bg-primary/20 mt-1">
-                      <ArrowRight className="w-4 h-4 text-primary" />
-                    </div>
-                    <div>
-                      <strong className="text-foreground">Risk Ranges:</strong>
-                      <span className="text-muted-foreground"> Provides best/worst case scenarios for informed decision-making</span>
-                    </div>
-                  </li>
-                </ul>
+                  <div className="p-6 rounded-lg bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20">
+                    <h4 className="font-semibold text-lg mb-2 flex items-center gap-2">
+                      <Sparkles className="w-5 h-5 text-purple-500" />
+                      Prediction Confidence
+                    </h4>
+                    <p className="text-muted-foreground text-sm">
+                      Our ARIMA model provides 95% confidence intervals, meaning there's a high probability the actual price 
+                      will fall within the predicted range. The forecast includes expected value, lower bound (minimum expected), 
+                      and upper bound (maximum expected) to help you make risk-aware investment decisions.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -423,9 +421,9 @@ export default function HomePage() {
                 </Badge>
                 <h3 className="text-3xl font-bold mb-4">Advanced Risk Assessment Tools</h3>
                 <p className="text-lg text-muted-foreground mb-6">
-                  Understanding risk is crucial for successful investing. We calculate industry-standard risk metrics including 
-                  Value at Risk (VaR), Sharpe Ratio, volatility measures, and maximum drawdown to help you quantify and manage 
-                  your portfolio risk exposure effectively.
+                  Get comprehensive portfolio risk analysis with real-time monitoring of critical risk metrics. Our system 
+                  automatically detects risk violations and provides instant alerts when your portfolio exceeds safe thresholds, 
+                  helping you make informed decisions to protect your investments.
                 </p>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-3">
@@ -433,8 +431,8 @@ export default function HomePage() {
                       <ArrowRight className="w-4 h-4 text-primary" />
                     </div>
                     <div>
-                      <strong className="text-foreground">Value at Risk (VaR):</strong>
-                      <span className="text-muted-foreground"> Maximum expected loss over a given period with 95% confidence</span>
+                      <strong className="text-foreground">Risk Violation Detection:</strong>
+                      <span className="text-muted-foreground"> Automatic alerts when volatility or drawdown exceeds safe thresholds</span>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
@@ -442,8 +440,8 @@ export default function HomePage() {
                       <ArrowRight className="w-4 h-4 text-primary" />
                     </div>
                     <div>
-                      <strong className="text-foreground">Sharpe Ratio:</strong>
-                      <span className="text-muted-foreground"> Measures risk-adjusted returns to evaluate portfolio efficiency</span>
+                      <strong className="text-foreground">Six Key Risk Metrics:</strong>
+                      <span className="text-muted-foreground"> Volatility, Max Drawdown, Sharpe Ratio, Sortino Ratio, Portfolio Beta, and Asset Weight</span>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
@@ -451,54 +449,19 @@ export default function HomePage() {
                       <ArrowRight className="w-4 h-4 text-primary" />
                     </div>
                     <div>
-                      <strong className="text-foreground">Volatility Tracking:</strong>
-                      <span className="text-muted-foreground"> Monitor price swings and portfolio stability over time</span>
+                      <strong className="text-foreground">Threshold Monitoring:</strong>
+                      <span className="text-muted-foreground"> Each metric tracked against industry-standard thresholds with color-coded status indicators</span>
                     </div>
                   </li>
                 </ul>
               </div>
-              <Card className="border-2 border-primary/20 shadow-2xl">
-                <CardContent className="p-8">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between p-4 rounded-lg bg-gradient-to-r from-red-500/10 to-rose-500/10">
-                      <div>
-                        <div className="text-sm text-muted-foreground">Risk Level</div>
-                        <div className="text-2xl font-bold">Moderate</div>
-                      </div>
-                      <Shield className="w-10 h-10 text-red-500" />
-                    </div>
-                    <div className="space-y-3">
-                      <div className="p-3 rounded-lg bg-muted">
-                        <div className="flex justify-between items-center mb-1">
-                          <span className="text-sm text-muted-foreground">Sharpe Ratio</span>
-                          <span className="text-sm font-semibold">1.85</span>
-                        </div>
-                        <div className="h-2 bg-background rounded-full overflow-hidden">
-                          <div className="h-full bg-gradient-to-r from-green-500 to-emerald-500 w-[70%]" />
-                        </div>
-                      </div>
-                      <div className="p-3 rounded-lg bg-muted">
-                        <div className="flex justify-between items-center mb-1">
-                          <span className="text-sm text-muted-foreground">Max Drawdown</span>
-                          <span className="text-sm font-semibold text-red-600">-18.3%</span>
-                        </div>
-                        <div className="h-2 bg-background rounded-full overflow-hidden">
-                          <div className="h-full bg-gradient-to-r from-red-500 to-rose-500 w-[35%]" />
-                        </div>
-                      </div>
-                      <div className="p-3 rounded-lg bg-muted">
-                        <div className="flex justify-between items-center mb-1">
-                          <span className="text-sm text-muted-foreground">Volatility (30d)</span>
-                          <span className="text-sm font-semibold">42.7%</span>
-                        </div>
-                        <div className="h-2 bg-background rounded-full overflow-hidden">
-                          <div className="h-full bg-gradient-to-r from-amber-500 to-orange-500 w-[50%]" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="border-2 border-primary/20 shadow-2xl rounded-lg overflow-hidden">
+                <img 
+                  src="/risk-assessment-preview.png" 
+                  alt="Risk Assessment Dashboard showing comprehensive portfolio risk analysis with metrics including Volatility, Max Drawdown, Sharpe Ratio, Sortino Ratio, Portfolio Beta, and Max Asset Weight"
+                  className="w-full h-auto"
+                />
+              </div>
             </div>
           </div>
         </div>

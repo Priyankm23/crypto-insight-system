@@ -1,14 +1,19 @@
 import sqlite3
+import os
 from app.models.user import User
 from passlib.context import CryptContext
 import json
 from typing import List, Dict, Any, Optional
 
-DATABASE_URL = "db/user.db"
+# Get the base directory (backend folder)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+DATABASE_URL = os.path.join(BASE_DIR, "db", "user.db")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # --- Initialization Functions ---
 def init_user_db():
+    # Ensure the db directory exists
+    os.makedirs(os.path.dirname(DATABASE_URL), exist_ok=True)
     conn = sqlite3.connect(DATABASE_URL)
     c = conn.cursor()
     c.execute("""

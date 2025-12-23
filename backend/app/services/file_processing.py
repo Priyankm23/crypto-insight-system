@@ -5,7 +5,9 @@ from fastapi import UploadFile
 import pandas as pd
 import aiofiles
 
-UPLOAD_DIR = "data/user_uploads"
+# Get the base directory (backend folder)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+UPLOAD_DIR = os.path.join(BASE_DIR, "data", "user_uploads")
 
 async def save_uploaded_files(files: List[UploadFile], user_id: int) -> List[str]:
     """Saves uploaded files to a user-specific directory."""

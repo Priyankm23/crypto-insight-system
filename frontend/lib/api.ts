@@ -1,6 +1,6 @@
 // API client configuration and utilities
 
-const API_BASE_URL ="http://127.0.0.1:8000"
+const API_BASE_URL ="http://127.0.0.1:8000/backend"
 
 export class APIError extends Error {
   constructor(
@@ -69,7 +69,7 @@ export const api = {
           timestamp: string
         }>
         prediction: Array<{ result: { predicted_value: number; confidence: number }; timestamp: string }>
-      }>("/metrics/dashboard/")
+      }>("/metrics/dashboard")
     },
   },
   metrics: {
