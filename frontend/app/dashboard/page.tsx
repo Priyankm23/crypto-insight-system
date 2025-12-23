@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import Link from "next/link"
-import { BarChart3, Target, TrendingUp, Zap, Sparkles, ArrowRight, Activity, Shield, AlertTriangle, Info } from "lucide-react"
+import { BarChart3, Target, TrendingUp, Zap, Sparkles, ArrowRight, Activity, Shield, AlertTriangle, Info, Brain, Lock, LineChart, PieChart, Layers } from "lucide-react"
 
 export default function DashboardPage() {
   const { user, isLoading: authLoading } = useAuth()
@@ -73,197 +73,40 @@ export default function DashboardPage() {
       <section className="relative overflow-hidden border-b border-border/40 bg-gradient-to-br from-primary/10 via-accent/5 to-background">
         <div className="absolute inset-0 bg-grid-white/5 [mask-image:linear-gradient(0deg,transparent,black)] pointer-events-none" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 max-w-7xl relative">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left Content */}
-            <div className="max-w-2xl">
-              <div className="flex items-center gap-2 mb-4">
-                <Sparkles className="w-6 h-6 text-primary animate-pulse" />
-                <span className="text-sm font-semibold text-primary uppercase tracking-wide">Welcome Back</span>
-              </div>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text text-transparent">
-                Hello, {user?.name}!
-              </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground mb-10 leading-relaxed">
-                Track, analyze, and optimize your crypto portfolio with advanced AI-powered insights and real-time market data.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Link href="/portfolio">
-                  <Button size="lg" className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-lg px-8 py-6">
-                    <BarChart3 className="w-5 h-5 mr-2" />
-                    Portfolio Analysis
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </Link>
-                <Link href="/metrics">
-                  <Button size="lg" variant="outline" className="text-lg px-8 py-6">
-                    <Target className="w-5 h-5 mr-2" />
-                    View Metrics
-                  </Button>
-                </Link>
-                <Link href="/predictions">
-                  <Button size="lg" variant="outline" className="text-lg px-8 py-6">
-                    <Zap className="w-5 h-5 mr-2" />
-                    AI Predictions
-                  </Button>
-                </Link>
-              </div>
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Sparkles className="w-6 h-6 text-primary animate-pulse" />
+              <span className="text-sm font-semibold text-primary uppercase tracking-wide">Welcome Back</span>
             </div>
-
-            {/* Right Side - 3D Blockchain Visualization */}
-            <div className="relative hidden lg:flex items-center justify-center h-96">
-              <div className="relative w-full h-full flex items-center justify-center perspective-1000">
-                {/* Background Glow */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-64 h-64 bg-gradient-to-br from-cyan-500/20 via-blue-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse" />
-                </div>
-
-                {/* Blockchain Chain - 5 Connected Blocks */}
-                <div className="relative flex items-center gap-4">
-                  {/* Block 1 - Bitcoin */}
-                  <div className="animate-block-float" style={{ animationDelay: '0s' }}>
-                    <div className="relative group">
-                      <div className="w-20 h-20 bg-gradient-to-br from-orange-400 to-amber-600 rounded-lg shadow-2xl transform rotate-45 hover:rotate-12 transition-all duration-500 border-2 border-orange-300/30">
-                        <div className="absolute inset-0 bg-gradient-to-tr from-white/30 via-transparent to-transparent rounded-lg" />
-                        <div className="absolute inset-2 border border-orange-200/20 rounded" />
-                      </div>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-10 h-10 bg-white/95 rounded-full transform -rotate-45 flex items-center justify-center shadow-lg">
-                          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
-                            <path d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.525.362 9.105 1.962 2.67 8.475-1.243 14.9.358c6.43 1.605 10.342 8.115 8.738 14.546z" fill="#F7931A"/>
-                            <path d="M17.13 11.3c.225-1.506-.923-2.316-2.49-2.856l.51-2.04-1.242-.31-.496 1.987c-.327-.08-.662-.158-.996-.234l.5-2.003-1.24-.31-.51 2.038c-.27-.062-.535-.123-.792-.187l.002-.008-1.714-.428-.33 1.324s.923.212.903.224c.503.126.594.457.578.72l-.58 2.327c.035.008.08.02.13.04l-.132-.033-.812 3.256c-.062.153-.217.382-.567.295.013.018-.904-.225-.904-.225l-.617 1.418 1.615.403c.3.075.594.154.883.23l-.515 2.07 1.24.31.51-2.042c.338.092.667.177.99.257l-.508 2.035 1.243.31.515-2.067c2.122.4 3.715.24 4.385-1.67.54-1.54-.027-2.427-1.14-3.006.812-.187 1.422-.72 1.585-1.822zm-2.835 3.976c-.384 1.543-2.98.71-3.82.5l.683-2.733c.84.21 3.55.625 3.137 2.233zm.384-4.003c-.35 1.404-2.5.69-3.198.515l.618-2.48c.697.174 2.944.5 2.58 1.965z" fill="#fff"/>
-                          </svg>
-                        </div>
-                      </div>
-                      {/* Connection Line */}
-                      <div className="absolute top-1/2 -right-4 w-4 h-0.5 bg-gradient-to-r from-orange-400 to-blue-400 animate-pulse" />
-                    </div>
-                  </div>
-
-                  {/* Block 2 - Ethereum */}
-                  <div className="animate-block-float" style={{ animationDelay: '0.2s' }}>
-                    <div className="relative group">
-                      <div className="w-20 h-20 bg-gradient-to-br from-indigo-400 to-purple-600 rounded-lg shadow-2xl transform rotate-45 hover:rotate-12 transition-all duration-500 border-2 border-indigo-300/30">
-                        <div className="absolute inset-0 bg-gradient-to-tr from-white/30 via-transparent to-transparent rounded-lg" />
-                        <div className="absolute inset-2 border border-indigo-200/20 rounded" />
-                      </div>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-10 h-10 bg-white/95 rounded-full transform -rotate-45 flex items-center justify-center shadow-lg">
-                          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
-                            <path d="M11.944 17.97L4.58 13.62 11.943 24l7.37-10.38-7.372 4.35h.003zM12.056 0L4.69 12.223l7.365 4.354 7.365-4.35L12.056 0z" fill="#627EEA"/>
-                          </svg>
-                        </div>
-                      </div>
-                      {/* Connection Line */}
-                      <div className="absolute top-1/2 -right-4 w-4 h-0.5 bg-gradient-to-r from-indigo-400 to-purple-400 animate-pulse" style={{ animationDelay: '0.2s' }} />
-                    </div>
-                  </div>
-
-                  {/* Block 3 - Center/Highlighted */}
-                  <div className="animate-block-float" style={{ animationDelay: '0.4s' }}>
-                    <div className="relative group">
-                      <div className="w-24 h-24 bg-gradient-to-br from-indigo-400 via-purple-500 to-pink-600 rounded-lg shadow-2xl transform rotate-45 hover:rotate-12 transition-all duration-500 border-2 border-purple-300/40 ring-4 ring-purple-400/20">
-                        <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent rounded-lg" />
-                        <div className="absolute inset-2 border-2 border-purple-200/30 rounded" />
-                        <div className="absolute -inset-1 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-lg blur-sm animate-pulse" />
-                      </div>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-10 h-10 bg-white/95 rounded transform -rotate-45 flex items-center justify-center shadow-xl">
-                          <Activity className="w-5 h-5 text-purple-600 animate-pulse" />
-                        </div>
-                      </div>
-                      {/* Connection Line */}
-                      <div className="absolute top-1/2 -right-4 w-4 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 animate-pulse" style={{ animationDelay: '0.4s' }} />
-                    </div>
-                  </div>
-
-                  {/* Block 4 - Cardano */}
-                  <div className="animate-block-float" style={{ animationDelay: '0.6s' }}>
-                    <div className="relative group">
-                      <div className="w-20 h-20 bg-gradient-to-br from-blue-400 to-cyan-600 rounded-lg shadow-2xl transform rotate-45 hover:rotate-12 transition-all duration-500 border-2 border-blue-300/30">
-                        <div className="absolute inset-0 bg-gradient-to-tr from-white/30 via-transparent to-transparent rounded-lg" />
-                        <div className="absolute inset-2 border border-blue-200/20 rounded" />
-                      </div>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-10 h-10 bg-white/95 rounded-full transform -rotate-45 flex items-center justify-center shadow-lg">
-                          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm4.34 16.46c-.21.35-.56.63-.98.78-.42.15-.89.18-1.32.08-.86-.2-1.53-.85-1.73-1.71-.1-.43-.07-.89.08-1.31.15-.42.43-.77.78-.98.35-.21.76-.32 1.18-.32s.83.11 1.18.32c.35.21.63.56.78.98.15.42.18.88.08 1.31-.1.43-.35.82-.65 1.15-.3.33-.68.55-1.1.65.42-.1.8-.32 1.1-.65.3-.33.55-.72.65-1.15.1-.43.07-.89-.08-1.31-.15-.42-.43-.77-.78-.98-.35-.21-.76-.32-1.18-.32s-.83.11-1.18.32c-.35.21-.63.56-.78.98-.15.42-.18.88-.08 1.31.2.86.87 1.51 1.73 1.71.43.1.9.07 1.32-.08.42-.15.77-.43.98-.78z" fill="#0033AD"/>
-                            <circle cx="12" cy="8.5" r="1.5" fill="#0033AD"/>
-                            <circle cx="8" cy="12" r="1.3" fill="#0033AD"/>
-                            <circle cx="16" cy="12" r="1.3" fill="#0033AD"/>
-                          </svg>
-                        </div>
-                      </div>
-                      {/* Connection Line */}
-                      <div className="absolute top-1/2 -right-4 w-4 h-0.5 bg-gradient-to-r from-blue-400 to-teal-400 animate-pulse" style={{ animationDelay: '0.6s' }} />
-                    </div>
-                  </div>
-
-                  {/* Block 5 - Solana */}
-                  <div className="animate-block-float" style={{ animationDelay: '0.8s' }}>
-                    <div className="relative group">
-                      <div className="w-20 h-20 bg-gradient-to-br from-purple-400 to-fuchsia-600 rounded-lg shadow-2xl transform rotate-45 hover:rotate-12 transition-all duration-500 border-2 border-purple-300/30">
-                        <div className="absolute inset-0 bg-gradient-to-tr from-white/30 via-transparent to-transparent rounded-lg" />
-                        <div className="absolute inset-2 border border-purple-200/20 rounded" />
-                      </div>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-10 h-10 bg-white/95 rounded-full transform -rotate-45 flex items-center justify-center shadow-lg">
-                          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
-                            <path d="M5.08 17.93c.15-.15.36-.24.58-.24h16.1c.39 0 .59.47.31.75l-3.68 3.68c-.15.15-.36.24-.58.24H1.71c-.39 0-.59-.47-.31-.75l3.68-3.68zm0-13.61L8.76.64c.15-.15.36-.24.58-.24h16.1c.39 0 .59.47.31.75l-3.68 3.68c-.15.15-.36.24-.58.24H5.39c-.39 0-.59-.47-.31-.75zm3.68 6.54c.15-.15.36-.24.58-.24h16.1c.39 0 .59.47.31.75l-3.68 3.68c-.15.15-.36.24-.58.24H5.39c-.39 0-.59-.47-.31-.75l3.68-3.68z" fill="url(#solana-gradient)"/>
-                            <defs>
-                              <linearGradient id="solana-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stopColor="#9945FF"/>
-                                <stop offset="100%" stopColor="#14F195"/>
-                              </linearGradient>
-                            </defs>
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Floating Data Particles */}
-                <div className="absolute top-12 left-20 w-2 h-2 bg-cyan-400 rounded-full animate-ping" style={{ animationDuration: '2s' }} />
-                <div className="absolute top-24 right-16 w-1.5 h-1.5 bg-blue-400 rounded-full animate-ping" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }} />
-                <div className="absolute bottom-16 left-24 w-2 h-2 bg-purple-400 rounded-full animate-ping" style={{ animationDuration: '3s', animationDelay: '1s' }} />
-                <div className="absolute bottom-20 right-20 w-1.5 h-1.5 bg-pink-400 rounded-full animate-ping" style={{ animationDuration: '2.8s', animationDelay: '1.5s' }} />
-                
-                {/* Orbiting Data Stream */}
-                <div className="absolute inset-0 animate-spin" style={{ animationDuration: '25s' }}>
-                  <div className="absolute top-4 left-1/2 w-3 h-3 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full shadow-lg" />
-                </div>
-                <div className="absolute inset-0 animate-spin" style={{ animationDuration: '20s', animationDirection: 'reverse' }}>
-                  <div className="absolute bottom-8 left-1/2 w-2 h-2 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full shadow-lg" />
-                </div>
-
-                {/* Blockchain Label */}
-                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2">
-                  <div className="px-4 py-1.5 rounded-full bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-pink-500/20 border border-purple-400/30 backdrop-blur-sm">
-                    <span className="text-xs font-semibold text-foreground/80">Blockchain Network</span>
-                  </div>
-                </div>
-              </div>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text text-transparent">
+              Hello, {user?.name}!
+            </h1>
+            <p className="text-xl md:text-2xl text-muted-foreground mb-10 leading-relaxed max-w-2xl mx-auto">
+              Track, analyze, and optimize your crypto portfolio with advanced AI-powered insights and real-time market data.
+            </p>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Link href="/portfolio">
+                <Button size="lg" className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-lg px-8 py-6">
+                  <BarChart3 className="w-5 h-5 mr-2" />
+                  Portfolio Analysis
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+              <Link href="/metrics">
+                <Button size="lg" variant="outline" className="text-lg px-8 py-6">
+                  <Target className="w-5 h-5 mr-2" />
+                  View Metrics
+                </Button>
+              </Link>
+              <Link href="/predictions">
+                <Button size="lg" variant="outline" className="text-lg px-8 py-6">
+                  <Zap className="w-5 h-5 mr-2" />
+                  AI Predictions
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
-
-        {/* Add custom animation styles */}
-        <style jsx>{`
-          @keyframes block-float {
-            0%, 100% {
-              transform: translateY(0px);
-            }
-            50% {
-              transform: translateY(-12px);
-            }
-          }
-          .animate-block-float {
-            animation: block-float 3s ease-in-out infinite;
-          }
-          .perspective-1000 {
-            perspective: 1000px;
-          }
-        `}</style>
       </section>
 
       {/* Market Ticker */}
@@ -369,214 +212,179 @@ export default function DashboardPage() {
 
         {/* Important Disclaimer */}
         <section id="disclaimer" className="mb-12 scroll-mt-20">
-          <Card className="border-amber-500/30 bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-background shadow-xl overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500" />
-            <CardContent className="p-8">
-              <div className="flex flex-col lg:flex-row gap-8 items-start">
-                {/* Left side - Icon and title */}
-                <div className="flex-shrink-0 lg:w-64">
-                  <div className="inline-flex items-center justify-center p-4 rounded-2xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 border-2 border-amber-500/30 shadow-lg mb-4">
-                    <AlertTriangle className="w-16 h-16 text-amber-500" />
-                  </div>
-                  <div>
-                    <h2 className="text-3xl font-bold text-amber-600 dark:text-amber-500 mb-1">
-                      Important
-                    </h2>
-                    <h3 className="text-3xl font-bold text-foreground mb-4">
-                      Disclaimer
-                    </h3>
-                    <div className="h-1 w-20 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full" />
-                  </div>
+          <div className="relative overflow-hidden rounded-xl border border-amber-500/20 bg-gradient-to-r from-amber-500/5 to-background p-1 shadow-lg">
+            <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-amber-500 to-orange-600" />
+            <div className="p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center md:items-start">
+              <div className="p-4 bg-amber-500/10 rounded-full border border-amber-500/20 flex-shrink-0 animate-pulse-slow">
+                <AlertTriangle className="w-8 h-8 text-amber-600 dark:text-amber-500" />
+              </div>
+              <div className="flex-1 space-y-3">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-bold text-foreground">
+                    System Transparency & Risk Disclosure
+                  </h3>
+                  <span className="px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-600 text-[10px] font-bold uppercase tracking-wider border border-amber-500/20">
+                    Important
+                  </span>
                 </div>
-                
-                {/* Right side - Content */}
-                <div className="flex-1">
-                  <div className="bg-card/50 rounded-xl p-6 border border-amber-500/20 backdrop-blur-sm mb-4">
-                    <p className="text-lg font-semibold text-foreground leading-relaxed">
-                      This platform performs <span className="text-amber-600 dark:text-amber-500 font-bold">real calculations</span> on your portfolio data, but results should <span className="text-amber-600 dark:text-amber-500 font-bold">not be trusted 100%</span> as they do not account for external factors affecting each asset's market behavior.
-                    </p>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  While our AI models utilize advanced historical data analysis and technical indicators, cryptocurrency markets are highly volatile and influenced by unpredictable external factors. 
+                  <span className="text-foreground font-medium"> Predictions are probabilistic, not guaranteed.</span> This platform is for informational purposes only.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                    <span>Does not account for breaking news or regulations</span>
                   </div>
-                  
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="group p-4 rounded-lg bg-card/30 border border-border/50 hover:border-amber-500/30 transition-all duration-300">
-                      <div className="flex items-start gap-3">
-                        <div className="mt-1 p-1.5 rounded-full bg-amber-500/20">
-                          <div className="w-2 h-2 rounded-full bg-amber-500" />
-                        </div>
-                        <p className="text-sm text-muted-foreground leading-relaxed">
-                          Calculations are <strong className="text-foreground">based on historical data</strong> and technical indicators only
-                        </p>
-                      </div>
-                    </div>
-                    
-                    <div className="group p-4 rounded-lg bg-card/30 border border-border/50 hover:border-orange-500/30 transition-all duration-300">
-                      <div className="flex items-start gap-3">
-                        <div className="mt-1 p-1.5 rounded-full bg-orange-500/20">
-                          <div className="w-2 h-2 rounded-full bg-orange-500" />
-                        </div>
-                        <p className="text-sm text-muted-foreground leading-relaxed">
-                          Does <strong className="text-foreground">not account for</strong> news, regulations, or market sentiment
-                        </p>
-                      </div>
-                    </div>
-                    
-                    <div className="group p-4 rounded-lg bg-card/30 border border-border/50 hover:border-red-500/30 transition-all duration-300">
-                      <div className="flex items-start gap-3">
-                        <div className="mt-1 p-1.5 rounded-full bg-red-500/20">
-                          <div className="w-2 h-2 rounded-full bg-red-500" />
-                        </div>
-                        <p className="text-sm text-muted-foreground leading-relaxed">
-                          Should <strong className="text-foreground">not be used</strong> as the sole basis for investment decisions
-                        </p>
-                      </div>
-                    </div>
-                    
-                    <div className="group p-4 rounded-lg bg-card/30 border border-border/50 hover:border-amber-500/30 transition-all duration-300">
-                      <div className="flex items-start gap-3">
-                        <div className="mt-1 p-1.5 rounded-full bg-amber-500/20">
-                          <div className="w-2 h-2 rounded-full bg-amber-500" />
-                        </div>
-                        <p className="text-sm text-muted-foreground leading-relaxed">
-                          Always <strong className="text-foreground">consult licensed advisors</strong> before making investments
-                        </p>
-                      </div>
-                    </div>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                    <span>Past performance is not indicative of future results</span>
                   </div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </section>
 
         {/* Features Explanation */}
         <section className="mb-12">
-          <div className="mb-8">
-            <h2 className="text-3xl font-bold mb-2">Platform Features</h2>
-            <p className="text-muted-foreground text-lg">Comprehensive tools for crypto portfolio analysis</p>
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="text-3xl font-bold mb-2">System Modules</h2>
+              <p className="text-muted-foreground text-lg">Advanced tools for portfolio management</p>
+            </div>
+            <div className="hidden md:flex gap-2">
+              <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              <div className="w-2 h-2 rounded-full bg-primary/50" />
+              <div className="w-2 h-2 rounded-full bg-primary/20" />
+            </div>
           </div>
           
-          {/* Bento Grid Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 auto-rows-fr">
-            {/* Portfolio Analysis - Large Featured Card */}
-            <div className="lg:col-span-2 lg:row-span-2 group relative">
-              <Card className="h-full border-border/50 bg-gradient-to-br from-blue-500/5 via-card/50 to-cyan-500/5 backdrop-blur-sm hover:border-blue-500/50 transition-all duration-300 overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-500" />
-                <div className="relative p-8 h-full flex flex-col">
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="p-4 rounded-2xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 group-hover:scale-110 transition-transform duration-300">
-                      <BarChart3 className="w-10 h-10 text-blue-500" />
-                    </div>
-                    <div className="px-3 py-1 rounded-full bg-blue-500/20 border border-blue-500/30 text-xs font-semibold text-blue-500">
-                      Featured
-                    </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Module 1 */}
+            <Link href="/portfolio" className="group">
+              <div className="h-full p-6 rounded-2xl bg-card border border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <BarChart3 className="w-24 h-24 text-primary transform rotate-12 translate-x-8 -translate-y-8" />
+                </div>
+                <div className="relative z-10">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <BarChart3 className="w-6 h-6 text-primary" />
                   </div>
-                  <h3 className="text-2xl font-bold mb-3">Portfolio Analysis</h3>
-                  <p className="text-muted-foreground leading-relaxed mb-6 flex-1">
-                    Upload your portfolio data and get comprehensive risk analysis, investment strategies, and performance metrics. Advanced algorithms analyze your holdings and provide actionable insights.
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">Portfolio Analysis</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                    Comprehensive breakdown of your holdings with real-time valuation and performance tracking.
                   </p>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-medium text-blue-600 dark:text-blue-400">
-                      Risk Analysis
-                    </span>
-                    <span className="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-xs font-medium text-cyan-600 dark:text-cyan-400">
-                      Performance
-                    </span>
-                    <span className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-medium text-blue-600 dark:text-blue-400">
-                      Strategies
-                    </span>
+                  <div className="flex items-center text-xs font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                    Access Module <ArrowRight className="w-3 h-3 ml-1" />
                   </div>
                 </div>
-              </Card>
-            </div>
-            
-            {/* Risk Metrics */}
-            <div className="group relative">
-              <Card className="h-full border-border/50 bg-card/50 backdrop-blur-sm hover:border-green-500/50 hover:shadow-lg hover:shadow-green-500/10 transition-all duration-300 overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-green-500 to-emerald-500" />
-                <div className="p-6 h-full flex flex-col">
-                  <div className="mb-4">
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20 inline-block group-hover:scale-110 transition-transform duration-300">
-                      <Target className="w-6 h-6 text-green-500" />
-                    </div>
+              </div>
+            </Link>
+
+            {/* Module 2 */}
+            <Link href="/metrics" className="group">
+              <div className="h-full p-6 rounded-2xl bg-card border border-border/50 hover:border-violet-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-violet-500/5 relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <Target className="w-24 h-24 text-violet-500 transform rotate-12 translate-x-8 -translate-y-8" />
+                </div>
+                <div className="relative z-10">
+                  <div className="w-12 h-12 rounded-xl bg-violet-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Target className="w-6 h-6 text-violet-500" />
                   </div>
-                  <h3 className="text-lg font-bold mb-2">Risk Metrics</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                    Monitor volatility, drawdown, Sharpe ratio, and other key metrics.
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-violet-500 transition-colors">Risk Metrics</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                    Advanced risk assessment including Sharpe Ratio, Volatility, and Maximum Drawdown analysis.
                   </p>
-                </div>
-              </Card>
-            </div>
-            
-            {/* Market Insights */}
-            <div className="group relative">
-              <Card className="h-full border-border/50 bg-card/50 backdrop-blur-sm hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300 overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-purple-500 to-pink-500" />
-                <div className="p-6 h-full flex flex-col">
-                  <div className="mb-4">
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 inline-block group-hover:scale-110 transition-transform duration-300">
-                      <TrendingUp className="w-6 h-6 text-purple-500" />
-                    </div>
+                  <div className="flex items-center text-xs font-medium text-violet-500 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                    Access Module <ArrowRight className="w-3 h-3 ml-1" />
                   </div>
-                  <h3 className="text-lg font-bold mb-2">Market Insights</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                    Track real-time market data, price trends, and latest crypto news.
+                </div>
+              </div>
+            </Link>
+
+            {/* Module 3 */}
+            <Link href="/predictions" className="group">
+              <div className="h-full p-6 rounded-2xl bg-card border border-border/50 hover:border-amber-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/5 relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <Brain className="w-24 h-24 text-amber-500 transform rotate-12 translate-x-8 -translate-y-8" />
+                </div>
+                <div className="relative z-10">
+                  <div className="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Brain className="w-6 h-6 text-amber-500" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-amber-500 transition-colors">AI Predictions</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                    Machine learning powered price forecasting and trend analysis for major cryptocurrencies.
                   </p>
-                </div>
-              </Card>
-            </div>
-            
-            {/* AI Predictions - Medium Card */}
-            <div className="lg:col-span-2 group relative">
-              <Card className="h-full border-border/50 bg-gradient-to-br from-orange-500/5 via-card/50 to-red-500/5 backdrop-blur-sm hover:border-orange-500/50 transition-all duration-300 overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-orange-500 to-red-500" />
-                <div className="relative p-6 h-full flex items-center gap-6">
-                  <div className="p-4 rounded-2xl bg-gradient-to-br from-orange-500/20 to-red-500/20 border border-orange-500/30 group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
-                    <Zap className="w-8 h-8 text-orange-500" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold mb-2">AI Predictions</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      Get AI-powered price predictions and trend forecasts to help inform your investment strategy with machine learning models.
-                    </p>
+                  <div className="flex items-center text-xs font-medium text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                    Access Module <ArrowRight className="w-3 h-3 ml-1" />
                   </div>
                 </div>
-              </Card>
-            </div>
-            
-            {/* Stress Testing */}
-            <div className="group relative">
-              <Card className="h-full border-border/50 bg-card/50 backdrop-blur-sm hover:border-indigo-500/50 hover:shadow-lg hover:shadow-indigo-500/10 transition-all duration-300 overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-indigo-500 to-violet-500" />
-                <div className="p-6 h-full flex flex-col">
-                  <div className="mb-4">
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/10 border border-indigo-500/20 inline-block group-hover:scale-110 transition-transform duration-300">
-                      <Shield className="w-6 h-6 text-indigo-500" />
-                    </div>
+              </div>
+            </Link>
+
+            {/* Module 4 */}
+            <div className="group cursor-default">
+              <div className="h-full p-6 rounded-2xl bg-card border border-border/50 hover:border-emerald-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/5 relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <LineChart className="w-24 h-24 text-emerald-500 transform rotate-12 translate-x-8 -translate-y-8" />
+                </div>
+                <div className="relative z-10">
+                  <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <LineChart className="w-6 h-6 text-emerald-500" />
                   </div>
-                  <h3 className="text-lg font-bold mb-2">Stress Testing</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                    Simulate portfolio performance under different market conditions.
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-emerald-500 transition-colors">Market Intelligence</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                    Real-time market data aggregation and sentiment analysis from global sources.
                   </p>
-                </div>
-              </Card>
-            </div>
-            
-            {/* Investment Insights */}
-            <div className="group relative">
-              <Card className="h-full border-border/50 bg-card/50 backdrop-blur-sm hover:border-teal-500/50 hover:shadow-lg hover:shadow-teal-500/10 transition-all duration-300 overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-teal-500 to-cyan-500" />
-                <div className="p-6 h-full flex flex-col">
-                  <div className="mb-4">
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-teal-500/10 to-cyan-500/10 border border-teal-500/20 inline-block group-hover:scale-110 transition-transform duration-300">
-                      <Info className="w-6 h-6 text-teal-500" />
-                    </div>
+                  <div className="flex items-center text-xs font-medium text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                    Active <Activity className="w-3 h-3 ml-1" />
                   </div>
-                  <h3 className="text-lg font-bold mb-2">Investment Insights</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                    Receive actionable insights and recommendations to optimize allocation.
-                  </p>
                 </div>
-              </Card>
+              </div>
+            </div>
+
+            {/* Module 5 */}
+            <div className="group cursor-default">
+              <div className="h-full p-6 rounded-2xl bg-card border border-border/50 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/5 relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <Layers className="w-24 h-24 text-cyan-500 transform rotate-12 translate-x-8 -translate-y-8" />
+                </div>
+                <div className="relative z-10">
+                  <div className="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Layers className="w-6 h-6 text-cyan-500" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-cyan-500 transition-colors">Strategy Builder</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                    Create and backtest custom investment strategies using historical market data.
+                  </p>
+                  <div className="flex items-center text-xs font-medium text-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                    Active <Activity className="w-3 h-3 ml-1" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Module 6 */}
+            <div className="group cursor-default">
+              <div className="h-full p-6 rounded-2xl bg-card border border-border/50 hover:border-rose-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-rose-500/5 relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <Shield className="w-24 h-24 text-rose-500 transform rotate-12 translate-x-8 -translate-y-8" />
+                </div>
+                <div className="relative z-10">
+                  <div className="w-12 h-12 rounded-xl bg-rose-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Shield className="w-6 h-6 text-rose-500" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-rose-500 transition-colors">Security Monitor</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                    Continuous monitoring of portfolio health and exposure to high-risk assets.
+                  </p>
+                  <div className="flex items-center text-xs font-medium text-rose-500 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                    Active <Activity className="w-3 h-3 ml-1" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>

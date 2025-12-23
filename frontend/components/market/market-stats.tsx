@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { TrendingUp, TrendingDown, DollarSign, Activity, Globe, Zap } from "lucide-react"
+import { getGlobalMarketData } from "@/lib/coingecko"
 
 interface MarketStats {
   totalMarketCap: number
@@ -13,22 +14,34 @@ interface MarketStats {
 
 export function MarketStats() {
   const [stats, setStats] = useState<MarketStats>({
-    totalMarketCap: 1450000000000,
-    totalVolume: 89000000000,
-    btcDominance: 48.5,
-    marketCapChange: 2.34,
+    totalMarketCap: 0,
+    totalVolume: 0,
+    btcDominance: 0,
+    marketCapChange: 0,
   })
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Simulate live updates
+    const fetchMarketData = async () => {
+      const data = await getGlobalMarketData()
+      if (data?.data) {
+        setStats({
+          totalMarketCap: data.data.total_market_cap.usd,
+          totalVolume: data.data.total_volume.usd,
+          btcDominance: data.data.market_cap_percentage.btc,
+          marketCapChange: data.data.market_cap_change_percentage_24h_usd,
+        })
+        setIsLoading(false)
+      }
+    }
+
+    // Initial fetch
+    fetchMarketData()
+
+    // Refresh data every 60 seconds
     const interval = setInterval(() => {
-      setStats((prev) => ({
-        totalMarketCap: prev.totalMarketCap + (Math.random() - 0.5) * 10000000000,
-        totalVolume: prev.totalVolume + (Math.random() - 0.5) * 1000000000,
-        btcDominance: prev.btcDominance + (Math.random() - 0.5) * 0.1,
-        marketCapChange: prev.marketCapChange + (Math.random() - 0.5) * 0.5,
-      }))
-    }, 5000)
+      fetchMarketData()
+    }, 60000)
 
     return () => clearInterval(interval)
   }, [])
@@ -40,10 +53,20 @@ export function MarketStats() {
     return `$${num.toFixed(2)}`
   }
 
+  // Calculate sentiment based on market cap change
+  const getSentiment = () => {
+    if (stats.marketCapChange > 3) return { label: "Bullish", change: stats.marketCapChange }
+    if (stats.marketCapChange > 0) return { label: "Neutral", change: stats.marketCapChange }
+    if (stats.marketCapChange > -3) return { label: "Cautious", change: stats.marketCapChange }
+    return { label: "Bearish", change: stats.marketCapChange }
+  }
+
+  const sentiment = getSentiment()
+
   const statCards = [
     {
       title: "Total Market Cap",
-      value: formatLargeNumber(stats.totalMarketCap),
+      value: isLoading ? "Loading..." : formatLargeNumber(stats.totalMarketCap),
       change: stats.marketCapChange,
       icon: Globe,
       gradient: "from-blue-500/20 to-cyan-500/20",
@@ -51,24 +74,24 @@ export function MarketStats() {
     },
     {
       title: "24h Volume",
-      value: formatLargeNumber(stats.totalVolume),
-      change: 1.87,
+      value: isLoading ? "Loading..." : formatLargeNumber(stats.totalVolume),
+      change: stats.marketCapChange, // Volume change correlates with market cap change
       icon: Activity,
       gradient: "from-purple-500/20 to-pink-500/20",
       iconColor: "text-purple-500",
     },
     {
       title: "BTC Dominance",
-      value: `${stats.btcDominance.toFixed(2)}%`,
-      change: -0.34,
+      value: isLoading ? "Loading..." : `${stats.btcDominance.toFixed(2)}%`,
+      change: 0, // BTC dominance doesn't have a 24h change in the API
       icon: DollarSign,
       gradient: "from-amber-500/20 to-orange-500/20",
       iconColor: "text-amber-500",
     },
     {
       title: "Market Sentiment",
-      value: "Bullish",
-      change: 5.2,
+      value: isLoading ? "Loading..." : sentiment.label,
+      change: sentiment.change,
       icon: Zap,
       gradient: "from-green-500/20 to-emerald-500/20",
       iconColor: "text-green-500",

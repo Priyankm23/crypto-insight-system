@@ -13,6 +13,21 @@ export interface CryptoAsset {
   }
 }
 
+export interface GlobalMarketData {
+  data: {
+    total_market_cap: {
+      usd: number
+    }
+    total_volume: {
+      usd: number
+    }
+    market_cap_percentage: {
+      btc: number
+    }
+    market_cap_change_percentage_24h_usd: number
+  }
+}
+
 export async function getTopCryptos(limit = 10): Promise<CryptoAsset[]> {
   try {
     const response = await fetch(
@@ -27,5 +42,22 @@ export async function getTopCryptos(limit = 10): Promise<CryptoAsset[]> {
   } catch (error) {
     console.error("[v0] Error fetching crypto data:", error)
     return []
+  }
+}
+
+export async function getGlobalMarketData(): Promise<GlobalMarketData | null> {
+  try {
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/global`,
+    )
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch global market data")
+    }
+
+    return response.json()
+  } catch (error) {
+    console.error("[v0] Error fetching global market data:", error)
+    return null
   }
 }
